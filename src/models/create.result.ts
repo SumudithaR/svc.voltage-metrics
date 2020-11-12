@@ -8,8 +8,8 @@ export class CreateResult<T extends IResource> extends BaseResult {
   createdItem: T;
 
   constructor(item: T);
-  constructor(statusCode: number, error: string);
-  constructor(statusCode?: number, error?: string, item?: T,) {
+  constructor(item: T, statusCode: number, error: string);
+  constructor(item: T = null, statusCode?: number, error?: string) {
     if (item !== null) {
       statusCode = HttpStatus.CREATED;
     }

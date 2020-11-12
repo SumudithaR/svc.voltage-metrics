@@ -31,21 +31,28 @@
 ## Installation
 
 ```bash
-$ npm install
+#$ npm install
+$ yarn build
 ```
 
 ## Running the app
 
 ```bash
 # development
-$ npm run start
+#$ npm run start
+$ yarn start
 
 # watch mode
-$ npm run start:dev
+#$ npm run start:dev
+$ yarn start --debug
 
 # production mode
 $ npm run start:prod
 ```
+
+## Database Migrations
+
+$ yarn typeorm migration:create -n Initial -d src/migrations
 
 ## Test
 

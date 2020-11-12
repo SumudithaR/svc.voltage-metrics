@@ -9,7 +9,7 @@ const options = {
   transport: Transport.KAFKA,
   options: {
     client: {
-      brokers: ['localhost:9092'],
+      brokers: ['walpola.tk:9094'],
     },
     consumer: {
       groupId: 'kafka-voltage-metrics',

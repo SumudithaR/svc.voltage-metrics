@@ -1,6 +1,7 @@
-import { Column } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { BaseEntity } from './base.entity';
 
+@Entity()
 export class MetricEntity extends BaseEntity {
   @Column({ type: 'float', default: 0, nullable: false })
   voltage0: number;
@@ -18,6 +19,6 @@ export class MetricEntity extends BaseEntity {
   voltage6: number;
   @Column({ type: 'float', default: 0, nullable: false })
   voltage7: number;
-  @Column({ type: 'datetime', nullable: false })
+  @Column({ type: 'timestamp', nullable: false })
   deviceTime: Date;
 }

@@ -1,5 +1,5 @@
 import { Controller, Logger } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { MessagePattern, Payload, Transport } from '@nestjs/microservices';
 import { NewMetricDto } from 'src/dtos/new-metric.dto';
 import { MetricsService } from 'src/services/metrics/metrics.service';
 

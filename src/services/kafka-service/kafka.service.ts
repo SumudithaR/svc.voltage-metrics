@@ -1,10 +1,6 @@
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { NewMetricDto } from 'src/dtos/new-metric.dto';
-import { MetricEntity } from 'src/entities/metric.entity';
 import { IResource } from 'src/interfaces/iresource.interface';
-import { CreateResult } from 'src/models/create.result';
-import { BaseRepository } from 'src/repositories/metrics.base-repository';
-import { Client, ClientKafka, Transport } from '@nestjs/microservices';
+import { ClientKafka } from '@nestjs/microservices';
 import { PublishResult } from 'src/models/publish.result';
 
 @Injectable()
@@ -19,15 +15,17 @@ export class KafkaService {
     topicName: string,
   ): Promise<PublishResult<IResource>> {
     try {
-      
       this.kafkaClient.send(topicName, item);
+
+      this.logger.log(`Successfully published Metric. Topic => ${topicName}.`);
       return new PublishResult<IResource>(item);
-    
     } catch (ex) {
-      
       this.logger.error(`Failed to write to Kafka Topic. Exception: ${ex}`);
-      return new PublishResult<IResource>(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to write to Kafka Topic.');
-    
+      return new PublishResult<IResource>(
+        null,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        'Failed to write to Kafka Topic.',
+      );
     }
   }
 }

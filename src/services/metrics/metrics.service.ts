@@ -15,12 +15,11 @@ export class MetricsService {
     private readonly logger: Logger,
   ) {}
 
-  async createMetric(
-    newItem: NewMetricDto,
-  ): Promise<CreateResult<MetricDto>> {
+  async createMetric(newItem: NewMetricDto): Promise<CreateResult<MetricDto>> {
     try {
       if (newItem === null) {
         return new CreateResult<MetricDto>(
+          null,
           HttpStatus.BAD_REQUEST,
           'Provided new Metric is inavlid.',
         );
@@ -37,19 +36,24 @@ export class MetricsService {
       dataItem.voltage7 = newItem.voltage7;
       dataItem.deviceTime = newItem.deviceTime;
 
-      var createdItem = await this.metricsRepository.createEntity(dataItem);
+      // TODO: Fix this.
+      var createdItem = dataItem;
+      //await this.metricsRepository.createEntity(dataItem);
 
       if (createdItem === null) {
         return new CreateResult<MetricDto>(
+          null,
           HttpStatus.INTERNAL_SERVER_ERROR,
           'Failed to save new Metric.',
         );
       }
 
+      this.logger.log('Successfully created Metric.');
       return new CreateResult<MetricDto>(createdItem);
     } catch (ex) {
       this.logger.error(`Failed to create new Metric. Exception:${ex}`);
       return new CreateResult<MetricDto>(
+        null,
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Failed to create new Metric.',
       );
@@ -60,6 +64,7 @@ export class MetricsService {
     try {
       if (item === null) {
         return new PublishResult<MetricDto>(
+          null,
           HttpStatus.BAD_REQUEST,
           'Provided Metric is inavlid.',
         );
@@ -72,6 +77,7 @@ export class MetricsService {
 
       if (!writeResult.isSuccess()) {
         return new PublishResult<MetricDto>(
+          null,
           writeResult.statusCode,
           'Failed to publish Metric.',
         );
@@ -81,6 +87,7 @@ export class MetricsService {
     } catch (ex) {
       this.logger.error(`Failed to publish Metric. Exception:${ex}`);
       return new PublishResult<MetricDto>(
+        null,
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Failed to publish Metric.',
       );

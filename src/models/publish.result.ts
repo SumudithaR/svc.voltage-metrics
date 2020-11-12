@@ -8,8 +8,8 @@ export class PublishResult<T extends IResource> extends BaseResult {
   publishedItem: T;
 
   constructor(item: T);
-  constructor(statusCode: number, error: string);
-  constructor(statusCode?: number, error?: string, item?: T,) {
+  constructor(item: T, statusCode: number, error: string);
+  constructor(item: T = null, statusCode?: number, error?: string) {
     if (item !== null) {
       statusCode = HttpStatus.OK;
     }
